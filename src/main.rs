@@ -17,6 +17,7 @@ pub enum CompressionMethod {
 fn main() {
     println!("Hello, world!");
     let method_size = bincode::serialized_size(&CompressionMethod::NoCompression).unwrap();
-    println!("{}", method_size)
-    print(CompressionMethod::Zstd)
+    println!("{}", method_size);
+    let zstd = CompressionMethod::Zstd;
+    println!("{:?}", zstd as u8);
 }
