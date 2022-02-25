@@ -1,10 +1,9 @@
 use {
     enum_iterator::IntoEnumIterator,
     std::io::{self, BufReader, Read, Write},
+    serde::{Serialize, Deserialize},
+    solana_storage_bigtable::LedgerStorage
 };
-
-use serde::{Serialize, Deserialize};
-
 
 #[derive(Debug, Serialize, Deserialize, IntoEnumIterator)]
 pub enum CompressionMethod {
@@ -17,7 +16,8 @@ pub enum CompressionMethod {
 fn main() {
     println!("Hello, world!");
     let method_size = bincode::serialized_size(&CompressionMethod::NoCompression).unwrap();
-    println!("{}", method_size);
+    println!("Method size: {}", method_size);
     let zstd = CompressionMethod::Zstd;
-    println!("{:?}", zstd as u8);
+    println!("Zstd enum: {:?}", zstd as u8);
+    let connection = LedgerStorage::new(true, Option("60"), ).await;
 }
