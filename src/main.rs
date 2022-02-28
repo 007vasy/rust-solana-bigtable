@@ -9,7 +9,8 @@ use {
     std::time::Duration,
     solana_sdk::{
         clock::{Slot, UnixTimestamp},
-    }
+    },
+    tokio::runtime
 };
 
 
@@ -33,9 +34,9 @@ pub enum CompressionMethod {
 
 async fn do_fetch() {
     let sixty_sec = Duration::new(60, 0);
-    let connection = LedgerStorage::new(true, std::option::Option::Some(sixty_sec), std::option::Option::Some("/home/ben/Projects/ChainLinkLabs/bigtable-decode/solana-sandbox-86de2dfd579b.json".to_owned()));
-    let slot = Slot::new(100010499);
-    connection.get_confirmed_block()
+    let connection = LedgerStorage::new(true, std::option::Option::Some(sixty_sec), std::option::Option::Some("/home/ben/Projects/ChainLinkLabs/bigtable-decode/solana-sandbox-86de2dfd579b.json".to_owned())).await.unwrap();
+    let slot = 100010499;
+    println!("{:?}",connection.get_confirmed_block(slot).await)
 }
 
 fn main() {
@@ -48,9 +49,12 @@ fn main() {
     let filename = "100010499.bin";
     let cell_data = get_file_as_byte_vec(&filename.to_owned());
 
+    let rt = runtime::Builder::new_multi_thread()
+        .enable_all()
+        .build()
+        .unwrap();
 
-    let do_fetch = do_fetch();
-    block_on(do_fetch)
+    rt.block_on(do_fetch())
     //println!("Cell data: {:?}", bigtable::CellData::Protobuf(cell_data));
     //get_confirmed_block
 }
