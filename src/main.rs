@@ -6,7 +6,10 @@ use {
     solana_storage_bigtable::{LedgerStorage},
     futures::executor::block_on,
     std::fs::{self,File},
-    std::time::Duration
+    std::time::Duration,
+    solana_sdk::{
+        clock::{Slot, UnixTimestamp},
+    }
 };
 
 
@@ -31,6 +34,8 @@ pub enum CompressionMethod {
 async fn do_fetch() {
     let sixty_sec = Duration::new(60, 0);
     let connection = LedgerStorage::new(true, std::option::Option::Some(sixty_sec), std::option::Option::Some("/home/ben/Projects/ChainLinkLabs/bigtable-decode/solana-sandbox-86de2dfd579b.json".to_owned()));
+    let slot = Slot::new(100010499);
+    connection.get_confirmed_block()
 }
 
 fn main() {
