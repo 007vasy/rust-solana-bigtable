@@ -40,14 +40,14 @@ async fn do_fetch() {
 }
 
 fn main() {
-    println!("Hello, world!");
-    let method_size = bincode::serialized_size(&CompressionMethod::NoCompression).unwrap();
-    println!("Method size: {}", method_size);
-    let zstd = CompressionMethod::Zstd;
-    println!("Zstd enum: {:?}", zstd as u8);
+    // println!("Hello, world!");
+    // let method_size = bincode::serialized_size(&CompressionMethod::NoCompression).unwrap();
+    // println!("Method size: {}", method_size);
+    // let zstd = CompressionMethod::Zstd;
+    // println!("Zstd enum: {:?}", zstd as u8);
 
-    let filename = "100010499.bin";
-    let cell_data = get_file_as_byte_vec(&filename.to_owned());
+    // let filename = "100010499.bin";
+    // let cell_data = get_file_as_byte_vec(&filename.to_owned());
 
     let rt = runtime::Builder::new_multi_thread()
         .enable_all()
