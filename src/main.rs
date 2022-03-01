@@ -9,6 +9,7 @@ use {
     std::time::Duration,
     solana_sdk::{
         clock::{Slot, UnixTimestamp},
+        pubkey::Pubkey,
     },
     tokio::runtime
 };
@@ -36,7 +37,13 @@ async fn do_fetch() {
     let sixty_sec = Duration::new(60, 0);
     let connection = LedgerStorage::new(true, std::option::Option::Some(sixty_sec), std::option::Option::Some("/home/ben/Projects/ChainLinkLabs/bigtable-decode/solana-sandbox-86de2dfd579b.json".to_owned())).await.unwrap();
     let slot = 100010499;
-    println!("{:?}",connection.get_confirmed_block(slot).await)
+    //println!("{:?}",connection.get_confirmed_block(slot).await);
+    //get_confirmed_signatures_for_address
+    let address = b"57X5Rq3o7k5z976kAjYTWu5yKfgX1aQxH4bXACpmTPPF";
+    let pubkey = Pubkey::new(address);
+    println!("_@_");
+    println!("{:?}",connection.get_confirmed_signatures_for_address(&pubkey,std::option::Option::None,std::option::Option::None,10).await);
+    // get_confirmed_transaction
 }
 
 fn main() {
