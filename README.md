@@ -10,7 +10,7 @@ there will be 1 constructor and 6 functions exposed [from here](https://github.c
 bigtable_conn = <package>.new(timeout: int, credential_path: str)
 ```
 
-### 5 functinos
+### 6 functinos
 #### get_first_available_block - Return the available slot that contains a block 
 ```python
 resp:Dict[str,Any] = bigtable_conn.get_first_available_block()
@@ -47,7 +47,7 @@ resp:Dict[str,Any] = bigtable_conn.get_confirmed_signatures_for_address(address:
 1. install rust https://www.rust-lang.org/tools/install
 1. build it (cargo build)
 1. get service account api key with bigtable read access
-1. export GOOGLE_APPLICATION_CREDENTIALS=<path_to_service_account_api_key>
+1. update path in code
 1. cargo run
 1. get decoded info
 1. PROFIT
