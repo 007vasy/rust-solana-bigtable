@@ -187,6 +187,7 @@ dependencies = [
  "enum-iterator",
  "futures",
  "serde",
+ "serde_json",
  "solana-sdk",
  "solana-storage-bigtable",
  "tokio",
