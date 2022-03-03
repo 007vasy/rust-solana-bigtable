@@ -1,3 +1,6 @@
+
+mod bigtable_wrappers;
+
 // #[macro_use]
 // extern crate cpython;
 
