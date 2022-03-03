@@ -12,6 +12,7 @@ use {
     solana_sdk::{
         clock::{Slot, UnixTimestamp},
         pubkey::{self,Pubkey},
+        signature::Signature,
     },
     tokio::runtime
 };
@@ -68,18 +69,27 @@ pub enum CompressionMethod {
 async fn do_fetch() {
     let sixty_sec = Duration::new(60, 0);
     let connection = LedgerStorage::new(true, std::option::Option::Some(sixty_sec), std::option::Option::Some("./solana-sandbox-86de2dfd579b.json".to_owned())).await.unwrap();
-    // let slot = 100010499;
-    // let block_data = connection.get_confirmed_block(slot).await;
-    // //let data_json_string = serde_json::to_string(&block_data.unwrap()).unwrap();
-    // println!("{:?}", block_data);
+    
+    //get_confirmed_block
+    println!(">> get_confirmed_block example START");
+    let slot = 100010499;
+    let block_data = connection.get_confirmed_block(slot).await;
+    //let data_json_string = serde_json::to_string(&block_data.unwrap()).unwrap();
+    println!("{:?}", block_data);
+    println!(">> get_confirmed_block example END");
 
     //get_confirmed_signatures_for_address
+    println!(">> get_confirmed_signatures_for_address example START");
     let address = "57X5Rq3o7k5z976kAjYTWu5yKfgX1aQxH4bXACpmTPPF";
     let pubkey = Pubkey::from_str(address).unwrap();
-
     println!("{:?}",connection.get_confirmed_signatures_for_address(&pubkey,std::option::Option::None,std::option::Option::None,10).await);
-    
+    println!(">> get_confirmed_signatures_for_address example END");
+
     //get_confirmed_transaction
+    println!(">> get_confirmed_transaction example START");
+    let signature = Signature::from_str("2jucFJFnV7CyXH9X1esPfiou8hBqotNtQUUdfRAoASqtnYv6PnRKQF2deKZd4wmh99HtqBbNmChcp3KSV9EvwtzS").unwrap();
+    println!("{:?}",connection.get_confirmed_transaction(&signature).await);
+    println!(">> get_confirmed_transaction example END");
 }
 
 fn main() {
