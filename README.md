@@ -13,11 +13,21 @@ bigtable_conn = <package>.new(timeout: int, credential_path: str)
 ### 6 functinos
 #### get_first_available_block - Return the available slot that contains a block 
 ```python
-resp:Dict[str,Any] = bigtable_conn.get_first_available_block()
+resp:int = bigtable_conn.get_first_available_block()
 ```
 expected struct (in Rust for the time being)
 ```rust
 // Result<Option<Slot>>
+pub type Slot = u64;
+```
+#### get_confirmed_blocks (plural) - Fetch the next slots after the provided slot that contains a block
+```python
+resp:List[int] = bigtable_conn.get_confirmed_blocks(start_slot:int, limit: int)
+```
+expected struct (in Rust for the time being)
+```rust
+// Result<Vec<Slot>>
+pub type Slot = u64;
 ```
 
 #### get_confirmed_block - Fetch the confirmed block from the desired slot
@@ -26,16 +36,17 @@ resp:Dict[str,Any] = bigtable_conn.get_confirmed_block(slot:int)
 ```
 expected struct (in Rust for the time being)
 ```rust
-// Result<Vec<Slot>>
-```
-
-#### get_confirmed_blocks (plural) - Fetch the next slots after the provided slot that contains a block
-```python
-resp:Dict[str,Any] = bigtable_conn.get_confirmed_blocks(start_slot:int, limit: int)
-```
-expected struct (in Rust for the time being)
-```rust
 // Result<ConfirmedBlock>
+#[derive(Clone, Debug, PartialEq)]
+pub struct ConfirmedBlock {
+    pub previous_blockhash: String,
+    pub blockhash: String,
+    pub parent_slot: Slot,
+    pub transactions: Vec<TransactionWithStatusMeta>,
+    pub rewards: Rewards,
+    pub block_time: Option<UnixTimestamp>,
+    pub block_height: Option<u64>,
+}
 ```
 
 #### get_signature_status - Get signature status
@@ -47,7 +58,6 @@ expected struct (in Rust for the time being)
 ```rust
 // Result<TransactionStatus>
 ```
-
 
 #### get_confirmed_transaction - Fetch a confirmed transaction
 ```python
@@ -61,7 +71,7 @@ expected struct (in Rust for the time being)
 
 #### get_confirmed_signatures_for_address - Get confirmed signatures for the provided address, in descending ledger order
 ```python
-resp:Dict[str,Any] = bigtable_conn.get_confirmed_signatures_for_address(address: str,before_signature: str|None, after_signature:str|None, limit: int|None)
+resp:List[Dict[str,Any]] = bigtable_conn.get_confirmed_signatures_for_address(address: str,before_signature: str|None, after_signature:str|None, limit: int|None)
 ```
 
 expected struct (in Rust for the time being)

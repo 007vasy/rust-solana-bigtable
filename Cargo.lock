@@ -202,6 +202,7 @@ dependencies = [
  "serde_json",
  "solana-sdk",
  "solana-storage-bigtable",
+ "solana-transaction-status",
  "tokio",
 ]
 
