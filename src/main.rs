@@ -69,38 +69,40 @@ pub enum CompressionMethod {
 async fn do_fetch() {
     let sixty_sec = Duration::new(60, 0);
     let connection = LedgerStorage::new(true, std::option::Option::Some(sixty_sec), std::option::Option::Some("./solana-sandbox-86de2dfd579b.json".to_owned())).await.unwrap();
-    
-    //get_confirmed_block
-    println!(">> get_confirmed_block example START");
-    let slot = 100010499;
-    let block_data = connection.get_confirmed_block(slot).await;
-    //let data_json_string = serde_json::to_string(&block_data.unwrap()).unwrap();
-    println!("{:?}", block_data);
-    println!(">> get_confirmed_block example END");
-
-    //get_confirmed_signatures_for_address
-    println!(">> get_confirmed_signatures_for_address example START");
-    let address = "57X5Rq3o7k5z976kAjYTWu5yKfgX1aQxH4bXACpmTPPF";
-    let pubkey = Pubkey::from_str(address).unwrap();
-    println!("{:?}",connection.get_confirmed_signatures_for_address(&pubkey,std::option::Option::None,std::option::Option::None,10).await);
-    println!(">> get_confirmed_signatures_for_address example END");
 
     //get_confirmed_transaction
-    println!(">> get_confirmed_transaction example START");
+    println!(">> get_signature_status example START");
     let signature = Signature::from_str("2jucFJFnV7CyXH9X1esPfiou8hBqotNtQUUdfRAoASqtnYv6PnRKQF2deKZd4wmh99HtqBbNmChcp3KSV9EvwtzS").unwrap();
-    println!("{:?}",connection.get_confirmed_transaction(&signature).await);
-    println!(">> get_confirmed_transaction example END");
+    let resp = connection.get_signature_status(&signature).await.unwrap();
+    println!("{:?}",resp);
+    let j = serde_json::to_string(&resp);
+
+    println!("{:?}", j);
+    println!(">> get_signature_status example END");
+    
+    // //get_confirmed_block
+    // println!(">> get_confirmed_block example START");
+    // let slot = 100010499;
+    // let block_data = connection.get_confirmed_block(slot).await;
+    // //let data_json_string = serde_json::to_string(&block_data.unwrap()).unwrap();
+    // println!("{:?}", block_data);
+    // println!(">> get_confirmed_block example END");
+
+    // //get_confirmed_signatures_for_address
+    // println!(">> get_confirmed_signatures_for_address example START");
+    // let address = "57X5Rq3o7k5z976kAjYTWu5yKfgX1aQxH4bXACpmTPPF";
+    // let pubkey = Pubkey::from_str(address).unwrap();
+    // println!("{:?}",connection.get_confirmed_signatures_for_address(&pubkey,std::option::Option::None,std::option::Option::None,10).await);
+    // println!(">> get_confirmed_signatures_for_address example END");
+
+    // //get_confirmed_transaction
+    // println!(">> get_confirmed_transaction example START");
+    // let signature = Signature::from_str("2jucFJFnV7CyXH9X1esPfiou8hBqotNtQUUdfRAoASqtnYv6PnRKQF2deKZd4wmh99HtqBbNmChcp3KSV9EvwtzS").unwrap();
+    // println!("{:?}",connection.get_confirmed_transaction(&signature).await);
+    // println!(">> get_confirmed_transaction example END");
 }
 
 fn main() {
-    // println!("Hello, world!");
-    // let method_size = bincode::serialized_size(&CompressionMethod::NoCompression).unwrap();
-    // println!("Method size: {}", method_size);
-    // let zstd = CompressionMethod::Zstd;
-    // println!("Zstd enum: {:?}", zstd as u8);
-
-    // let filename = "100010499.bin";
-    // let cell_data = get_file_as_byte_vec(&filename.to_owned());
 
     let rt = runtime::Builder::new_multi_thread()
         .enable_all()
@@ -108,6 +110,4 @@ fn main() {
         .unwrap();
 
     rt.block_on(do_fetch())
-    //println!("Cell data: {:?}", bigtable::CellData::Protobuf(cell_data));
-    //get_confirmed_block
 }

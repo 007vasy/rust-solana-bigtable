@@ -20,6 +20,7 @@ expected struct (in Rust for the time being)
 // Result<Option<Slot>>
 pub type Slot = u64;
 ```
+
 #### get_confirmed_blocks (plural) - Fetch the next slots after the provided slot that contains a block
 ```python
 resp:List[int] = bigtable_conn.get_confirmed_blocks(start_slot:int, limit: int)
@@ -116,7 +117,7 @@ pub struct VersionedTransaction {
 
 #### get_signature_status - Get signature status
 ```python
-resp:Dict[str,Any] = bigtable_conn.get_confirmed_blocks(signature: str)
+resp:Dict[str,Any] = bigtable_conn.get_signature_status(signature: str)
 ```
 
 expected struct (in Rust for the time being)
