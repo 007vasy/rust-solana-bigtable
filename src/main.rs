@@ -7,10 +7,11 @@ use {
     solana_storage_bigtable::{LedgerStorage},
     futures::executor::block_on,
     std::fs::{self,File},
+    std::str::FromStr,
     std::time::Duration,
     solana_sdk::{
         clock::{Slot, UnixTimestamp},
-        pubkey::Pubkey,
+        pubkey::{self,Pubkey},
     },
     tokio::runtime
 };
@@ -73,9 +74,9 @@ async fn do_fetch() {
     // println!("{:?}", block_data);
 
     //get_confirmed_signatures_for_address
-    let address = b"57X5Rq3o7k5z976kAjYTWu5yKfgX1aQxH4bXACpmTPPF";
-    let pubkey = Pubkey::new(address);
-    println!("_@_");
+    let address = "57X5Rq3o7k5z976kAjYTWu5yKfgX1aQxH4bXACpmTPPF";
+    let pubkey = Pubkey::from_str(address).unwrap();
+
     println!("{:?}",connection.get_confirmed_signatures_for_address(&pubkey,std::option::Option::None,std::option::Option::None,10).await);
     
     //get_confirmed_transaction
