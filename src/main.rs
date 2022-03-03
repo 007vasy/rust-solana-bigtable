@@ -67,17 +67,18 @@ pub enum CompressionMethod {
 async fn do_fetch() {
     let sixty_sec = Duration::new(60, 0);
     let connection = LedgerStorage::new(true, std::option::Option::Some(sixty_sec), std::option::Option::Some("./solana-sandbox-86de2dfd579b.json".to_owned())).await.unwrap();
-    let slot = 100010499;
-    let block_data = connection.get_confirmed_block(slot).await;
-    //let data_json_string = serde_json::to_string(&block_data.unwrap()).unwrap();
-    println!("{:?}", block_data);
+    // let slot = 100010499;
+    // let block_data = connection.get_confirmed_block(slot).await;
+    // //let data_json_string = serde_json::to_string(&block_data.unwrap()).unwrap();
+    // println!("{:?}", block_data);
 
     //get_confirmed_signatures_for_address
-    // let address = b"57X5Rq3o7k5z976kAjYTWu5yKfgX1aQxH4bXACpmTPPF";
-    // let pubkey = Pubkey::new(address);
-    // println!("_@_");
-    // println!("{:?}",connection.get_confirmed_signatures_for_address(&pubkey,std::option::Option::None,std::option::Option::None,10).await);
-    // get_confirmed_transaction
+    let address = b"57X5Rq3o7k5z976kAjYTWu5yKfgX1aQxH4bXACpmTPPF";
+    let pubkey = Pubkey::new(address);
+    println!("_@_");
+    println!("{:?}",connection.get_confirmed_signatures_for_address(&pubkey,std::option::Option::None,std::option::Option::None,10).await);
+    
+    //get_confirmed_transaction
 }
 
 fn main() {
