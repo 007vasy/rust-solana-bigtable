@@ -40,3 +40,14 @@ resp:Dict[str,Any] = bigtable_conn.get_confirmed_transaction(signature: str)
 ```python
 resp:Dict[str,Any] = bigtable_conn.get_confirmed_signatures_for_address(address: str,before_signature: str|None, after_signature:str|None, limit: int|None)
 ```
+
+## dev
+
+1. clone the repo at this tag https://github.com/007vasy/rust-solana-bigtable/releases/tag/v0.2
+1. install rust https://www.rust-lang.org/tools/install
+1. build it (cargo build)
+1. get service account api key with bigtable read access
+1. export GOOGLE_APPLICATION_CREDENTIALS=<path_to_service_account_api_key>
+1. cargo run
+1. get decoded info
+1. PROFIT
